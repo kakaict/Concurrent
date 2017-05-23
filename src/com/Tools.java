@@ -26,7 +26,12 @@ public class Tools {
 	// change 5 github
 	// change6 github to fetch 
 	
-public static void testMap(){
+	public static void main(String args[]) throws Exception{
+		
+		testSynMap();
+	}
+	
+	public static void testMap(){
 		
 		TreeMap<Object, Object> t = new TreeMap<Object, Object>();
 		t.put("v4", "v4");
@@ -40,10 +45,14 @@ public static void testMap(){
 		
 		
 		printMap(l);
+		
+		printMap(t);
+		
 
 	}
 
 	private static void printMap(Map<Object, Object> t) {
+		System.out.println("------------------");
 		for(Entry<Object, Object> e : t.entrySet()){
 			System.out.println(e.getKey() + " : " + e.getValue());
 		}
@@ -73,10 +82,8 @@ public static void testMap(){
 						for (int i = 0; i < 500000; i++) {
 							Integer crunchifyRandomNumber = (int) Math.ceil(Math.random() * 550000);
  
-							// Retrieve value. We are not using it anywhere
 							Integer crunchifyValue = crunchifyThreads.get(String.valueOf(crunchifyRandomNumber));
- 
-							// Put value
+
 							crunchifyThreads.put(String.valueOf(crunchifyRandomNumber), crunchifyRandomNumber);
 						}
 					}
