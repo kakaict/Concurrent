@@ -12,19 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 
-public class Tools {
-
-	//change 1
-	//change 2 on Github 
-	//change 2 in the same time from eclipse 
-	
-	//change 3 from Github  
-	
-	//change 4 from eclipse
-	
-	//change 5 eclipse
-	// change 5 github
-	// change6 github to fetch 
+public class MapMultiThread {
 	
 	public static void main(String args[]) throws Exception{
 		
