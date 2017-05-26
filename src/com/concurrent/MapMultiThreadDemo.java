@@ -1,4 +1,4 @@
-package com;
+package com.concurrent;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 
-public class MapMultiThread {
+public class MapMultiThreadDemo {
 	
 	public static void main(String args[]) throws Exception{
 		
@@ -59,10 +59,10 @@ public class MapMultiThread {
 		
 		for (int i = 0; i < 5; i++) {
 			long startTime = System.nanoTime();
-			ExecutorService crunchifyExServer = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+			ExecutorService service = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
  
 			for (int j = 0; j < THREAD_POOL_SIZE; j++) {
-				crunchifyExServer.execute(new Runnable() {
+				service.execute(new Runnable() {
 					@SuppressWarnings("unused")
 					@Override
 					public void run() {
@@ -79,10 +79,10 @@ public class MapMultiThread {
 			}
  
 			// Make sure executor stops
-			crunchifyExServer.shutdown();
+			service.shutdown();
  
 			// Blocks until all tasks have completed execution after a shutdown request
-			crunchifyExServer.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+			service.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
  
 			long entTime = System.nanoTime();
 			long totalTime = (entTime - startTime) / 1000000L;
