@@ -21,10 +21,15 @@ public class Country {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public Country(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	@Override
 	public int hashCode() {
-		if (getName().length() %2 == 0){
+		if (getId() %2 == 0){
 			return 30;
 		}
 		return 35;

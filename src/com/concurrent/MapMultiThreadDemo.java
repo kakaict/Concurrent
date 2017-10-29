@@ -15,8 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class MapMultiThreadDemo {
 	
 	public static void main(String args[]) throws Exception{
-		
-		testSynMap();
+		testPerformanceSynchronizedMap();
 	}
 	
 	public static void testMap(){
@@ -31,12 +30,8 @@ public class MapMultiThreadDemo {
 		l.put("v2", "v2");
 		l.put("v3", "v3");		
 		
-		
 		printMap(l);
-		
 		printMap(t);
-		
-
 	}
 
 	private static void printMap(Map<Object, Object> t) {
@@ -48,11 +43,11 @@ public class MapMultiThreadDemo {
 	
 	public final static int THREAD_POOL_SIZE = 5;
 	 
-	public static Map<String, Integer> crunchifyHashTableObject = null;
-	public static Map<String, Integer> crunchifySynchronizedMapObject = null;
+	public static Map<String, Integer> hashTableObject = null;
+	public static Map<String, Integer> synchronizedMapObject = null;
 	public static Map<String, Integer> crunchifyConcurrentHashMapObject = null;
 	
-	public static void crunchifyPerformTest(final Map<String, Integer> crunchifyThreads) throws InterruptedException {
+	public static void testPerformanceMap(final Map<String, Integer> crunchifyThreads) throws InterruptedException {
 		 
 		System.out.println("Test started for: " + crunchifyThreads.getClass());
 		long averageTime = 0;
@@ -60,18 +55,12 @@ public class MapMultiThreadDemo {
 		for (int i = 0; i < 5; i++) {
 			long startTime = System.nanoTime();
 			ExecutorService service = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
- 
 			for (int j = 0; j < THREAD_POOL_SIZE; j++) {
 				service.execute(new Runnable() {
-					@SuppressWarnings("unused")
 					@Override
 					public void run() {
- 
 						for (int i = 0; i < 500000; i++) {
 							Integer crunchifyRandomNumber = (int) Math.ceil(Math.random() * 550000);
- 
-							Integer crunchifyValue = crunchifyThreads.get(String.valueOf(crunchifyRandomNumber));
-
 							crunchifyThreads.put(String.valueOf(crunchifyRandomNumber), crunchifyRandomNumber);
 						}
 					}
@@ -83,7 +72,6 @@ public class MapMultiThreadDemo {
  
 			// Blocks until all tasks have completed execution after a shutdown request
 			service.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
- 
 			long entTime = System.nanoTime();
 			long totalTime = (entTime - startTime) / 1000000L;
 			averageTime += totalTime;
@@ -92,19 +80,19 @@ public class MapMultiThreadDemo {
 		System.out.println("For " + crunchifyThreads.getClass() + " the average time is " + averageTime / 5 + " ms\n");
 	}
 	
-	public static void testSynMap() throws InterruptedException {
+	public static void testPerformanceSynchronizedMap() throws InterruptedException {
 		 
 		// Test with Hashtable Object
-		crunchifyHashTableObject = new Hashtable<String, Integer>();
-		crunchifyPerformTest(crunchifyHashTableObject);
+		hashTableObject = new Hashtable<String, Integer>();
+		testPerformanceMap(hashTableObject);
  
 		// Test with synchronizedMap Object
-		crunchifySynchronizedMapObject = Collections.synchronizedMap(new HashMap<String, Integer>());
-		crunchifyPerformTest(crunchifySynchronizedMapObject);
+		synchronizedMapObject = Collections.synchronizedMap(new HashMap<String, Integer>());
+		testPerformanceMap(synchronizedMapObject);
  
 		// Test with ConcurrentHashMap Object
 		crunchifyConcurrentHashMapObject = new ConcurrentHashMap<String, Integer>();
-		crunchifyPerformTest(crunchifyConcurrentHashMapObject);
+		testPerformanceMap(crunchifyConcurrentHashMapObject);
  
 	}
 }
